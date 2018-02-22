@@ -1,5 +1,6 @@
 package com.example.m_7el.logintesing;
 
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -15,6 +16,8 @@ import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
@@ -26,6 +29,7 @@ public class FirstTest {
 
     @Rule
     public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
+
 
 
     @Test
@@ -43,6 +47,14 @@ public class FirstTest {
         onView(withId(R.id.password)).check(matches(hasErrorText("check password")));
 
 
+    }
+
+    @Test
+    public void checkIntent() {
+        onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
+        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234567890"));
+        onView(withId(R.id.login)).perform(click());
+        intended(hasComponent(ProfileActivity.class.getName()));
     }
 
 
