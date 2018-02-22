@@ -33,12 +33,13 @@ public class FirstTest {
 
 
     @Test
-    public void testErrorMessage() {
+    public void ErrorMessage() {
         // check email error
         onView(withId(R.id.email)).perform(typeText("mais @gmail.com"));
         onView(withId(R.id.password)).perform(typeText("1234567890"));
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.email)).check(matches(hasErrorText("check your Email")));
+
         //check password error
 
         onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
@@ -49,13 +50,7 @@ public class FirstTest {
 
     }
 
-    @Test
-    public void checkIntent() {
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234567890"));
-        onView(withId(R.id.login)).perform(click());
-        intended(hasComponent(ProfileActivity.class.getName()));
-    }
+
 
 
 }
