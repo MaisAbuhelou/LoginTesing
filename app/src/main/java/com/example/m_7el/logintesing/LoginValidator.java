@@ -17,7 +17,7 @@ class LoginValidator {
 
 
     public static Boolean checkPassword(String userPassword) {
-        if (userPassword != null && userPassword.length() >= 8) {
+        if (userPassword != null && userPassword.length() >= 6) {
 
             return true;
         } else {

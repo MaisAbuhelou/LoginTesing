@@ -15,6 +15,9 @@ public class LoginTester {
 
         assertThat(LoginValidator.checkEmail("name9_777@email.com"), is(true));
         assertThat(LoginValidator.checkEmail("name"), is(false));
+        assertThat(LoginValidator.checkEmail("name 33@gmail.com"), is(false));
+        assertThat(LoginValidator.checkEmail("name_m@gmail.com"), is(true));
+        assertThat(LoginValidator.checkEmail("name"), is(false));
 
     }
 
