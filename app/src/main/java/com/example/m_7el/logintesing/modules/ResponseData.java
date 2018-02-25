@@ -11,13 +11,17 @@ public class ResponseData {
     private String status;
     @SerializedName("status_code")
     private Integer statusCode;
+
+    public ResponseData(UserInformation userInformation, String status, Integer statusCode) {
+        this.userInformation = userInformation;
+        this.status = status;
+        this.statusCode = statusCode;
+    }
+
     public UserInformation getUserInformation() {
         return userInformation;
     }
 
-    public void setUserInformation(UserInformation userInformation) {
-        this.userInformation = userInformation;
-    }
 
     public String getStatus() {
         return status;

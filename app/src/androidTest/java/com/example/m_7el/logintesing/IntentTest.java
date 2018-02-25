@@ -26,10 +26,9 @@ public class IntentTest {
 
     @Test
     public void checkIntent() {
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234567890"));
+        onView(withId(R.id.email)).perform(clearText()).perform(typeText("yazan@harri.com"));
+        onView(withId(R.id.password)).perform(clearText()).perform(typeText("123123"));
         onView(withId(R.id.login)).perform(click());
-        intended(hasComponent(ProfileActivity.class.getName()));
     }
 
 

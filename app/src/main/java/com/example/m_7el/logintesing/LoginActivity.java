@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     LoginApi loginApiImp;
     private LoginInfo loginInfo;
+    private ResponseData mResponseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkUser() {
         loginApiImp.getUserInfo(loginInfo, new ApiCallback<ResponseData, String>() {
+
+
             @Override
             public void onSuccess(ResponseData responseData) {
                 if (responseData.getStatus().equals("Success")) {
@@ -73,18 +76,18 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                     intent.putExtra("userInfo", responseData.getUserInformation());
                     startActivity(intent);
-                } else {
+                } else if (responseData.getStatus().equals("Error")) {
+
                     Toast.makeText(getApplicationContext(), responseData.getUserInformation().getError(), Toast.LENGTH_LONG).show();
 
                 }
             }
-
             @Override
             public void onError(String s) {
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
 
             }
         });
+
     }
-
 }
-

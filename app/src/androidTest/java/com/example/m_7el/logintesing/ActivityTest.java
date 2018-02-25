@@ -31,7 +31,7 @@ public class ActivityTest {
     @Test
     public void ErrorMessageTesting() {
         String[] emails = {"emaill_9@.com", "mai s@gmail.com", "@mais@gmail.com"};
-        String[] passwords = {"mmmm", " 9 ", "192ujd"};
+        String[] passwords = {"mmmm", " 9 ", "192u"};
 
         // check email error
         for (int i = 0; i < emails.length; i++) {

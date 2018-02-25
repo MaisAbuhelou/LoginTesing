@@ -2,6 +2,7 @@ package com.example.m_7el.logintesing;
 
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -10,14 +11,18 @@ import static org.junit.Assert.assertThat;
 public class LoginTester {
 
 
+    @Mock
+    LoginValidator loginValidator;
+
+
     @Test
     public void emailValidity() {
 
-        assertThat(LoginValidator.checkEmail("name9_777@email.com"), is(true));
-        assertThat(LoginValidator.checkEmail("name"), is(false));
-        assertThat(LoginValidator.checkEmail("name 33@gmail.com"), is(false));
-        assertThat(LoginValidator.checkEmail("name_m@gmail.com"), is(true));
-        assertThat(LoginValidator.checkEmail("name"), is(false));
+        assertThat(loginValidator.checkEmail("name9_777@email.com"), is(true));
+        assertThat(loginValidator.checkEmail("name"), is(false));
+        assertThat(loginValidator.checkEmail("name 33@gmail.com"), is(false));
+        assertThat(loginValidator.checkEmail("name_m@gmail.com"), is(true));
+        assertThat(loginValidator.checkEmail("name"), is(false));
 
     }
 
@@ -25,11 +30,10 @@ public class LoginTester {
     @Test
     public void passwordValidity() {
 
-        assertThat(LoginValidator.checkPassword("12345678"), is(true));
-        assertThat(LoginValidator.checkPassword("99"), is(false));
+        assertThat(loginValidator.checkPassword("12345678"), is(true));
+        assertThat(loginValidator.checkPassword("99"), is(false));
 
     }
-
 
 
 }
