@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.support.v4.app.Fragment" />
+
+        <variable
+            name="loading"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="error"
+            type="java.lang.Boolean" />
+
+    </data>
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.m_7el.logintesing.MainActivity">
+    tools:context="com.example.m_7el.logintesing.LoginActivity">
 
 
     <EditText
@@ -35,5 +53,14 @@
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="@string/login"/>
+        android:text="@string/login"
+        android:visibility="@{safeUnbox(!loading) ? View.VISIBLE : View.GONE}" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:layout_centerInParent="true"
+        android:visibility="@{safeUnbox(loading) ? View.VISIBLE : View.GONE}" />
+
 </RelativeLayout>
+</layout>

@@ -11,7 +11,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         myComponent = DaggerMyComponent.builder()
-                .appModule(new AppModule())
+                .appModule(new AppModule(getApplicationContext()))
                 .build();
     }
 

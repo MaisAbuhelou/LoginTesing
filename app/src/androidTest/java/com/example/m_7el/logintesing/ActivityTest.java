@@ -18,6 +18,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 
@@ -46,7 +47,16 @@ public class ActivityTest {
             onView(withId(R.id.password)).perform(clearText()).perform(typeText(passwords[i]));
             onView(withId(R.id.login)).perform(click());
             onView(withId(R.id.password)).check(matches(hasErrorText("check password")));
+
         }
+
+    }
+    @Test
+    public void checkUser(){
+        onView(withId(R.id.email)).perform(clearText()).perform(typeText("yazan@harri.com"));
+        onView(withId(R.id.password)).perform(clearText()).perform(typeText("123123"));
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.progress)).check((matches(isDisplayed())));
 
     }
 

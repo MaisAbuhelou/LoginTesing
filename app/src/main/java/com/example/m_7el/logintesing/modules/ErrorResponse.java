@@ -14,8 +14,5 @@ public class ErrorResponse {
         return error;
     }
 
-    public String getField() {
-        return field;
-    }
 }
 

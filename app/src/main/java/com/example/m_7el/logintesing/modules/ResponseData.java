@@ -3,23 +3,20 @@ package com.example.m_7el.logintesing.modules;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponseData {
 
     @SerializedName("data")
-    private UserInformation userInformation;
+    private Object data ;
     @SerializedName("status")
     private String status;
     @SerializedName("status_code")
     private Integer statusCode;
 
-    public ResponseData(UserInformation userInformation, String status, Integer statusCode) {
-        this.userInformation = userInformation;
-        this.status = status;
-        this.statusCode = statusCode;
-    }
 
-    public UserInformation getUserInformation() {
-        return userInformation;
+    public Object getData() {
+        return data;
     }
 
 
