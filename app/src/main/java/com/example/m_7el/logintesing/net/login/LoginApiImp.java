@@ -24,7 +24,7 @@ public class LoginApiImp implements LoginApi {
 
 
     @Override
-    public void getUserInfo(LoginInfo loginInfo, final ApiCallback<ResponseData, String> callbacks) {
+    public void login(LoginInfo loginInfo, final ApiCallback<ResponseData, String> callbacks) {
         enqueueCall(mApis.login(loginInfo), callbacks);
     }
 

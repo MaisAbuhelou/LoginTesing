@@ -4,4 +4,8 @@
     <string name="email">Email</string>
     <string name="sign_up">Sign up</string>
     <string name="login">Login</string>
+    <string name="TOAST_STRING">Welcom</string>
+    <string name="error_data_message">your email or password wrong</string>
+    <string name="error_message">something goes wrong</string>
+    <string name="logout_message">logout successful</string>
 </resources>

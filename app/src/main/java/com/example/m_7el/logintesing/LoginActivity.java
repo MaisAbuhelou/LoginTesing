@@ -49,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         initializeViews();
     }
 
+
     private void initializeViews() {
-        userEmail = findViewById(R
-                .id.email);
+        userEmail = findViewById(R.id.email);
         userPassword = findViewById(R.id.password);
         final Button btnLogin = (findViewById(R.id.login));
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkUser() {
-        loginApiImp.getUserInfo(loginInfo, new ApiCallback<ResponseData, String>() {
+        loginApiImp.login(loginInfo, new ApiCallback<ResponseData, String>() {
 
 
             @Override
@@ -94,17 +94,18 @@ public class LoginActivity extends AppCompatActivity {
 
                     Map<String, Object> userMap = (Map<String, Object>) responseData.getData();
                     String name = userMap.get("first_name") + " " + userMap.get("last_name");
-                    Toast.makeText(getApplicationContext(), "welcome " + name, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.TOAST_STRING, Toast.LENGTH_LONG).show();
                     mySharedPreferences.putData("LoginInfo", name);
                     Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();
 
 
+
                 } else if (responseData.getStatusCode() == 403) {
                     binding.setLoading(false);
 
-                    Toast.makeText(getApplicationContext(), "your email or password wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.error_data_message, Toast.LENGTH_LONG).show();
 
                 } else if (responseData.getStatusCode() == 600) {
                     binding.setLoading(false);
@@ -119,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(String s) {
                 binding.setLoading(true);
 
-                Toast.makeText(getApplicationContext(), "something goes wrong", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_LONG).show();
 
             }
         });

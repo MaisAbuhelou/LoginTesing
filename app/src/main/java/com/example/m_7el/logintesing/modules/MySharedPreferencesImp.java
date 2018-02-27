@@ -9,7 +9,7 @@ public class MySharedPreferencesImp implements MySharedPreferences {
     private SharedPreferences mSharedPreferences;
 
     public MySharedPreferencesImp(Context mContext) {
-       mSharedPreferences= mContext.getSharedPreferences("LoginInfo",Context.MODE_PRIVATE);
+       mSharedPreferences= mContext.getSharedPreferences("MyPref",Context.MODE_PRIVATE);
     }
 
 
