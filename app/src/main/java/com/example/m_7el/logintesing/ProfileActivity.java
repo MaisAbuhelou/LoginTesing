@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.m_7el.logintesing.di.MyApp;
 import com.example.m_7el.logintesing.modules.MySharedPreferences;
@@ -31,7 +30,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
@@ -53,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void logout() {
         mySharedPreferences.ClearData();
         Toast.makeText(this, R.string.logout_message, Toast.LENGTH_LONG).show();
-        Intent intent=new Intent(ProfileActivity.this,ProfileActivity.class);
+        Intent intent=new Intent(ProfileActivity.this,LoginActivity.class);
         startActivity(intent);
         finish();
     }

@@ -15,10 +15,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class AppModule {
+public class AppModule {
 
     private Context mContext;
-    AppModule(Context context) {
+    public AppModule(Context context) {
         mContext=context;
     }
 

@@ -11,7 +11,7 @@ import retrofit2.http.PUT;
 public interface RetrofitInterface {
 
     @PUT("api/v1/login")
-    Call<ResponseData> login(@Body LoginInfo loginInfo);
+     Call<ResponseData> login(@Body LoginInfo loginInfo);
 
 
 }

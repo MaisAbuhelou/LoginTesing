@@ -1,13 +1,13 @@
 package com.example.m_7el.logintesing;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.rule.ActivityTestRule;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.m_7el.logintesing.modules.LoginInfo;
@@ -17,11 +17,9 @@ import com.example.m_7el.logintesing.net.login.LoginApiImp;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 
@@ -31,28 +29,22 @@ import retrofit2.Response;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
-public class ActivityTest {
+public class IntentTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
+    public IntentsTestRule<LoginActivity> mActivityRule = new IntentsTestRule<LoginActivity>(LoginActivity.class);
 
     private SharedPreferences mSharedPreferences = mock(SharedPreferences.class);
     private boolean isConnected;
@@ -61,91 +53,18 @@ public class ActivityTest {
     private LoginInfo loginInfo;
     private IdlingResource mIdlingResource;
 
-
     @Before
-    public void setUp() {
-        Intents.init();
+    public void registerIdlingResource() {
+
+        context = getInstrumentation().getTargetContext();
+        loginApiImp = (LoginApiImp) mActivityRule.getActivity().loginApiImp;
         mIdlingResource = mActivityRule.getActivity().getIdlingResource();
         // To prove that the test fails, omit this call:
         Espresso.registerIdlingResources(mIdlingResource);
-        context = getInstrumentation().getTargetContext();
-        loginApiImp = (LoginApiImp) mActivityRule.getActivity().loginApiImp;
-        context = getInstrumentation().getTargetContext();
         mSharedPreferences = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         checkNetwork();
         logout();
-    }
 
-    @Test
-    public void test1_wrongEmailFormat() {
-        // if email doesn't match  email pattern
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("m m @email.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234567890"));
-        closeSoftKeyboard();
-        onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.email)).check(matches(hasErrorText("check your Email")));
-    }
-
-    @Test
-    public void test2_wrongPasswordFormat() {
-        // if  password less than 6 digits
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234"));
-        closeSoftKeyboard();
-        onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.password)).check(matches(hasErrorText("check password")));
-
-    }
-
-    @Test
-    public void test3_nonExistentEmail() {
-        // if email match email pattern but has no  authentication
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("mais@gmail.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("1234333"));
-        closeSoftKeyboard();
-        onView(withId(R.id.login)).perform(click());
-        if (isConnected) {
-            onView(withText(R.string.error_data_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        } else {
-            onView(withText(R.string.error_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        }
-    }
-
-    @Test
-    public void test4_wrongPasswordForAnExistingEmail() {
-        // if email match email pattern but has no  authentication
-        onView(withId(R.id.email)).perform(clearText()).perform(typeText("yazan@harri.com"));
-        onView(withId(R.id.password)).perform(clearText()).perform(typeText("123124"));
-        closeSoftKeyboard();
-        onView(withId(R.id.login)).perform(click());
-        if (isConnected) {
-
-            onView(withText(R.string.error_data_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        } else {
-            onView(withText(R.string.error_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        }
-    }
-
-    @Test
-    public void test5_successfulLogin() {
-        login();
-        if (isConnected)
-            onView(withText(R.string.TOAST_STRING))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        else {
-            onView(withText(R.string.error_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        }
     }
 
     @Test
@@ -199,11 +118,10 @@ public class ActivityTest {
 
     @After
     public void unregisterIdlingResource() {
-        Intents.release();
         if (mIdlingResource != null) {
             Espresso.unregisterIdlingResources(mIdlingResource);
         }
     }
 
-
 }
+

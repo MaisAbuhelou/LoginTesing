@@ -1,5 +1,6 @@
 package com.example.m_7el.logintesing.di;
 
+import android.app.Activity;
 import android.app.Application;
 
 
@@ -19,4 +20,7 @@ public class MyApp extends Application {
         return myComponent;
     }
 
+    public void setMyAppComponent(MyComponent mockedComponent) {
+        myComponent=mockedComponent;
+    }
 }

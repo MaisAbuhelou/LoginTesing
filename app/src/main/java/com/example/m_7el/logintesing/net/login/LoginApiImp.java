@@ -1,16 +1,14 @@
 package com.example.m_7el.logintesing.net.login;
 
 
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
-import com.example.m_7el.logintesing.modules.ResponseData;
 import com.example.m_7el.logintesing.modules.LoginInfo;
+import com.example.m_7el.logintesing.modules.ResponseData;
 import com.example.m_7el.logintesing.net.ApiCallback;
 import com.example.m_7el.logintesing.net.RetrofitInterface;
 
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +32,6 @@ public class LoginApiImp implements LoginApi {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,7 +43,7 @@ public class LoginApiImp implements LoginApi {
     }
 
 
-    private void enqueueCall(@NonNull Call<ResponseData> call, @NonNull final ApiCallback<ResponseData, String> callback) {
+    public void enqueueCall(@NonNull Call<ResponseData> call, @NonNull final ApiCallback<ResponseData, String> callback) {
         call.enqueue(new Callback<ResponseData>() {
 
 
