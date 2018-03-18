@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.m_7el.logintesing.di.MyApp;
+import com.example.m_7el.logintesing.context.MyApp;
 import com.example.m_7el.logintesing.modules.MySharedPreferences;
 
 import javax.inject.Inject;

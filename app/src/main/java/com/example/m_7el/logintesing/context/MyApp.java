@@ -1,8 +1,11 @@
-package com.example.m_7el.logintesing.di;
+package com.example.m_7el.logintesing.context;
 
 import android.app.Activity;
 import android.app.Application;
 
+import com.example.m_7el.logintesing.di.AppModule;
+import com.example.m_7el.logintesing.di.DaggerMyComponent;
+import com.example.m_7el.logintesing.di.MyComponent;
 
 
 public class MyApp extends Application {
@@ -11,15 +14,14 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        myComponent = DaggerMyComponent.builder()
+        myComponent =initializeAppComponent();
+
+    }
+    protected MyComponent initializeAppComponent() {
+        return DaggerMyComponent.builder()
                 .appModule(new AppModule(getApplicationContext()))
                 .build();
     }
-
-    public MyComponent getMyComponent() {
-        return myComponent;
-    }
-
     public void setMyAppComponent(MyComponent mockedComponent) {
         myComponent=mockedComponent;
     }

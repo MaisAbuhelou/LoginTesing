@@ -12,6 +12,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.ResponseData;
+import com.example.m_7el.logintesing.modules.UserInformation;
 import com.example.m_7el.logintesing.net.RetrofitInterface;
 import com.example.m_7el.logintesing.net.login.LoginApiImp;
 
@@ -105,11 +106,7 @@ public class ActivityTest {
         closeSoftKeyboard();
         onView(withId(R.id.login)).perform(click());
         if (isConnected) {
-            onView(withText(R.string.error_data_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        } else {
-            onView(withText(R.string.error_message))
+            onView(withText("error"))
                     .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
                     .check(matches(isDisplayed()));
         }
@@ -124,11 +121,7 @@ public class ActivityTest {
         onView(withId(R.id.login)).perform(click());
         if (isConnected) {
 
-            onView(withText(R.string.error_data_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        } else {
-            onView(withText(R.string.error_message))
+            onView(withText("error"))
                     .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
                     .check(matches(isDisplayed()));
         }
@@ -138,14 +131,10 @@ public class ActivityTest {
     public void test5_successfulLogin() {
         login();
         if (isConnected)
-            onView(withText(R.string.TOAST_STRING))
+            onView(withText(R.string.valid_login))
                     .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
                     .check(matches(isDisplayed()));
-        else {
-            onView(withText(R.string.error_message))
-                    .inRoot(withDecorView(not(mActivityRule.getActivity().getWindow().getDecorView())))
-                    .check(matches(isDisplayed()));
-        }
+
     }
 
     @Test
@@ -153,11 +142,11 @@ public class ActivityTest {
         String testUsername;
         login();
         RetrofitInterface retrofitInterface = loginApiImp.initiateRetrofit();
-        Call<ResponseData> call = retrofitInterface.login(loginInfo);
+        Call<ResponseData<UserInformation>> call = retrofitInterface.login(loginInfo);
 
         if (isConnected) {
             try {
-                Response<ResponseData> response = call.execute();
+                Response<ResponseData<UserInformation>> response = call.execute();
                 ResponseData responseData = response.body();
                 if (responseData != null) {
                     assertTrue(response.isSuccessful() && responseData.getStatusCode() == 200);

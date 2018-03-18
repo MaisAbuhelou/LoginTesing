@@ -7,11 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.m_7el.logintesing.di.MyApp;
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.ResponseData;
 import com.example.m_7el.logintesing.net.RetrofitInterface;
-import com.example.m_7el.logintesing.net.login.LoginApi;
 import com.example.m_7el.logintesing.net.login.LoginApiImp;
 
 import org.junit.Before;
@@ -25,9 +23,6 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowLooper;
 
 import java.io.IOException;
-import java.util.Map;
-
-import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -35,7 +30,6 @@ import retrofit2.Response;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "brand_private": true,
+    "created": "Tue, 07 Jul 2015 12:37:30 GMT",
+    "current_login_at": "Thu, 15 Mar 2018 14:36:16 GMT",
+    "current_login_ip": "188.225.171.22",
+    "email": "yazan@harri.com",
+    "entry_mode": {
+      "brand_id": 504304,
+      "brand_type": "enterprise"
+    },
+    "feature": false,
+    "first_name": "yazan",
+    "id": 504715,
+    "language": "en",
+    "last_login_at": "Thu, 15 Mar 2018 14:36:16 GMT",
+    "last_login_ip": "188.225.171.22",
+    "last_name": "Aabed",
+    "login_count": 2063,
+    "phone": "000000000000",
+    "slug": "yazanaabed",
+    "social_login": false,
+    "team_user_id": 3035,
+    "updated": "Tue, 07 Jul 2015 12:37:30 GMT",
+    "user_candidate": true,
+    "user_employer": true,
+    "user_network": false
+  },
+  "status": "Success",
+  "status_code": 200
+}

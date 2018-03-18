@@ -1,27 +1,29 @@
 package com.example.m_7el.logintesing;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.ResponseData;
+import com.example.m_7el.logintesing.modules.UserInformation;
 import com.example.m_7el.logintesing.net.RetrofitInterface;
 import com.example.m_7el.logintesing.net.login.LoginApiImp;
+import com.google.gson.Gson;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -39,9 +41,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-@RunWith(AndroidJUnit4.class)
 
-public class IntentTest {
+public class TestResponse {
+    private String validLogin;
 
     @Rule
     public IntentsTestRule<LoginActivity> mActivityRule = new IntentsTestRule<LoginActivity>(LoginActivity.class);
@@ -52,6 +54,8 @@ public class IntentTest {
     private LoginApiImp loginApiImp;
     private LoginInfo loginInfo;
     private IdlingResource mIdlingResource;
+    private String invalidUsername;
+    private String invalidPassword;
 
     @Before
     public void registerIdlingResource() {
@@ -61,6 +65,9 @@ public class IntentTest {
         mIdlingResource = mActivityRule.getActivity().getIdlingResource();
         // To prove that the test fails, omit this call:
         Espresso.registerIdlingResources(mIdlingResource);
+        validLogin = readRawValues(R.raw.valid_login);
+        invalidUsername=readRawValues(R.raw.invalid_user_name);
+        invalidPassword=readRawValues(R.raw.invalid_password);
         mSharedPreferences = context.getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         checkNetwork();
         logout();
@@ -72,14 +79,15 @@ public class IntentTest {
         String testUsername;
         login();
         RetrofitInterface retrofitInterface = loginApiImp.initiateRetrofit();
-        Call<ResponseData> call = retrofitInterface.login(loginInfo);
+        Call<ResponseData<UserInformation>> call = retrofitInterface.login(loginInfo);
 
         if (isConnected) {
             try {
-                Response<ResponseData> response = call.execute();
-                ResponseData responseData = response.body();
+                Response<ResponseData<UserInformation>> response = call.execute();
+               ResponseData<UserInformation> responseData = new Gson().fromJson(validLogin,ResponseData.class);
+
                 if (responseData != null) {
-                    assertTrue(response.isSuccessful() && responseData.getStatusCode() == 200);
+                    assertTrue(responseData.getStatusCode()==200);
                 }
                 intended(hasComponent(ProfileActivity.class.getName()));
 
@@ -123,5 +131,28 @@ public class IntentTest {
         }
     }
 
-}
+    private String readRawValues(int value) {
 
+        InputStream raw = context.getResources().openRawResource(value);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        int i;
+        try {
+            i = raw.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = raw.read();
+            }
+            raw.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        }
+
+
+        return byteArrayOutputStream.toString();
+
+    }
+}

@@ -14,10 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.m_7el.logintesing.databinding.ActivityMainBinding;
-import com.example.m_7el.logintesing.di.MyApp;
+import com.example.m_7el.logintesing.context.MyApp;
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.MySharedPreferences;
 import com.example.m_7el.logintesing.modules.ResponseData;
+import com.example.m_7el.logintesing.modules.UserInformation;
 import com.example.m_7el.logintesing.net.ApiCallback;
 import com.example.m_7el.logintesing.net.login.LoginApi;
 
@@ -94,43 +95,34 @@ public class LoginActivity extends AppCompatActivity {
             mIdlingResource.setIdleState(false);
         }
 
-        loginApiImp.login(loginInfo, new ApiCallback<ResponseData, String>() {
-
-
+        loginApiImp.login(loginInfo, new ApiCallback<UserInformation, String>() {
             @Override
-            public void onSuccess(ResponseData responseData) {
+            public void onSuccess(UserInformation userInformation) {
                 binding.setLoading(false);
-
                 if (mIdlingResource != null) {
                     mIdlingResource.setIdleState(true);
                 }
-                if (responseData.getStatusCode() == 200) {
-
-                    Map<String, Object> userMap = (Map<String, Object>) responseData.getData();
-                    String name = userMap.get("first_name") + " " + userMap.get("last_name");
-                    Toast.makeText(getApplicationContext(), R.string.TOAST_STRING, Toast.LENGTH_LONG).show();
-                    mySharedPreferences.putData("LoginInfo", name);
+                if(userInformation!=null){
+                    String name = userInformation.getFirstName()+" "+userInformation.getLastName();
+                    Toast.makeText(getApplicationContext(),R.string.valid_login,Toast.LENGTH_LONG).show();
+                    mySharedPreferences.putData("LoginInfo",name);
                     goToAnotherActivity();
-
-
-                } else if (responseData.getStatusCode() == 403) {
-
-                    Toast.makeText(getApplicationContext(), R.string.error_data_message, Toast.LENGTH_LONG).show();
-
-                } else if (responseData.getStatusCode() == 600) {
-                    Toast.makeText(getApplicationContext(), "missing data", Toast.LENGTH_LONG).show();
-
                 }
+
 
             }
 
             @Override
             public void onError(String s) {
+                if (mIdlingResource != null) {
+                    mIdlingResource.setIdleState(true);
+                }
                 binding.setLoading(false);
-                Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+
 
             }
-        });
+        } );
 
     }
 
