@@ -58,10 +58,10 @@ dependencies {
         exclude module: 'okhttp'
     }
 
-    compile 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'org.mockito:mockito-android:2.7.22'
     // AndroidJUnitRunner and JUnit Rules
     compile 'com.android.support.test:runner:1.0.2-alpha1'
@@ -87,6 +87,8 @@ dependencies {
     testCompile 'org.robolectric:shadows-support-v4:3.0'
 
     testCompile 'com.squareup:fest-android:1.0.0'
+
+    testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.12'
 
 
 }

@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.telecom.Call;
 
+import com.example.m_7el.logintesing.context.MyApp;
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.ResponseData;
 import com.example.m_7el.logintesing.modules.UserInformation;
@@ -56,19 +57,12 @@ public class NewTest {
     }
 
     @Test
-    public void test1_wrongEmailFormat() {
-        MockLoginApi mockLoginApi = new MockLoginApi(InstrumentationRegistry.getTargetContext());
-        retrofit2.Call<ResponseData<UserInformation>> call = mockLoginApi.login(loginInfo);
-
-        try {
-            Response<ResponseData<UserInformation>> responseData =call.execute();
-            assertTrue(responseData.body().getStatusCode()==200);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void moduling(){
+        ((MyAppTest) mActivityRule.getActivity().getApplication()).getMyComponent().inject(this);
 
 
     }
+
+
 
 }

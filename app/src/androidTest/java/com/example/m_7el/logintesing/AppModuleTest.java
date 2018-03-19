@@ -9,18 +9,21 @@ import com.example.m_7el.logintesing.net.MockLoginApi;
 import com.example.m_7el.logintesing.net.login.LoginApi;
 import com.example.m_7el.logintesing.net.login.LoginApiImp;
 
+import dagger.Module;
+import dagger.Provides;
 
-public class AppModuleTest extends AppModule {
+@Module
+public class AppModuleTest{
 
 
     private final Context mContext;
 
     public AppModuleTest(Context context) {
-        super(context);
+
         mContext = context;
     }
 
-   // @Override
+   @Provides
     LoginApi getLoginInfo()  {
         return new LoginApiImp();
     }
