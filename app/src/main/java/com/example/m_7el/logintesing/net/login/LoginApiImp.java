@@ -4,7 +4,6 @@ package com.example.m_7el.logintesing.net.login;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.m_7el.logintesing.R;
 import com.example.m_7el.logintesing.modules.LoginInfo;
 import com.example.m_7el.logintesing.modules.ResponseData;
 import com.example.m_7el.logintesing.modules.UserInformation;
@@ -28,29 +27,10 @@ public class LoginApiImp implements LoginApi {
 
     @Override
     public void login(LoginInfo loginInfo, final ApiCallback<UserInformation, String> callback) {
-        enqueueCall(mApis.login(loginInfo), new ApiCallback<UserInformation, String>() {
-
-
-            @Override
-            public void onSuccess(UserInformation userInformation) {
-                if(userInformation!=null){
-                    callback.onSuccess(userInformation);
-                }
-                else {
-                    callback.onError("error");
-                }
-
-            }
-
-            @Override
-            public void onError(String s) {
-                callback.onError(s);
-
-            }
-        });
+        enqueueCall(mApis.login(loginInfo), callback);
     }
 
-   public RetrofitInterface initiateRetrofit() {
+    public RetrofitInterface initiateRetrofit() {
         Retrofit retrofit;
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -67,13 +47,12 @@ public class LoginApiImp implements LoginApi {
     }
 
 
-    public <R> void enqueueCall(final  @NonNull Call<ResponseData<R>> call, @NonNull final ApiCallback<R, String> callback) {
+    protected final <R> void enqueueCall(@NonNull final Call<ResponseData<R>> call, @NonNull final ApiCallback<R, String> callback) {
         call.enqueue(new Callback<ResponseData<R>>() {
-
 
             @Override
             public void onResponse(@NonNull Call<ResponseData<R>> call, @NonNull Response<ResponseData<R>> response) {
-             ResponseData<R> responseBody = response.body();
+                ResponseData<R> responseBody = response.body();
                 if (!response.isSuccessful() || responseBody == null) {
                     handleError(responseBody);
                     return;
@@ -83,23 +62,21 @@ public class LoginApiImp implements LoginApi {
                 } else {
                     handleError(responseBody);
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseData<R>> call, @NonNull Throwable t) {
-                callback.onError("error");
-                t.printStackTrace();
-
+                handleError(null);
             }
+
             private void handleError(@Nullable ResponseData<R> responseBody) {
-                String apiPath = call.request().url().encodedPath();
                 if (responseBody != null && responseBody.getStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {//Unauthorized user, session is lost/disconnected.
-                      callback.onError("error");
+                    callback.onError("error");
+                } else {//Unknown error.
+                    callback.onError("error");
                 }
             }
         });
-
     }
 
 }

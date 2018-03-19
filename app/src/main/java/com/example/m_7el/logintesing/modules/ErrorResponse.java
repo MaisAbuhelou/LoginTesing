@@ -2,17 +2,20 @@ package com.example.m_7el.logintesing.modules;
 
 import com.google.gson.annotations.SerializedName;
 
+
 public class ErrorResponse {
 
-    @SerializedName("error")
-    private String error;
-
     @SerializedName("field")
-    private String field;
+    private String mField;
 
-    public String getError() {
-        return error;
+    @SerializedName("error")
+    private String mErrorMessage;
+
+    public String getField() {
+        return mField;
     }
 
+    public String getErrorMessage() {
+        return mErrorMessage;
+    }
 }
-

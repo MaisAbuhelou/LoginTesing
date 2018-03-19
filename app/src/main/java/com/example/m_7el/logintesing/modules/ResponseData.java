@@ -17,7 +17,6 @@ public class ResponseData<T> {
         return data;
     }
 
-
     public String getStatus() {
         return status;
     }

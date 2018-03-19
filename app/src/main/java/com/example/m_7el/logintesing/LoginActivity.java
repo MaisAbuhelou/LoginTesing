@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
             startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
             finish();
+
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         userEmail = binding.email;
@@ -65,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 binding.setLoading(true);
-//                goToAnotherActivity();
 
                 Boolean checkEmailValidity = LoginValidator.checkEmail(userEmail.getText().toString());
                 if (checkEmailValidity) {
@@ -102,14 +102,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (mIdlingResource != null) {
                     mIdlingResource.setIdleState(true);
                 }
-                if(userInformation!=null){
-                    String name = userInformation.getFirstName()+" "+userInformation.getLastName();
-                    Toast.makeText(getApplicationContext(),R.string.valid_login,Toast.LENGTH_LONG).show();
-                    mySharedPreferences.putData("LoginInfo",name);
+                if (userInformation != null) {
+                    String name = userInformation.getFirstName() + " " + userInformation.getLastName();
+                    Toast.makeText(getApplicationContext(), R.string.valid_login, Toast.LENGTH_LONG).show();
+                    mySharedPreferences.putData("LoginInfo", name);
                     goToAnotherActivity();
                 }
-
-
             }
 
             @Override
@@ -118,11 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                     mIdlingResource.setIdleState(true);
                 }
                 binding.setLoading(false);
-                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
 
 
             }
-        } );
+        });
 
     }
 

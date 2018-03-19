@@ -9,6 +9,8 @@ import com.example.m_7el.logintesing.modules.MySharedPreferencesImp;
 import com.example.m_7el.logintesing.net.login.LoginApi;
 import com.example.m_7el.logintesing.net.login.LoginApiImp;
 
+import java.io.IOException;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -25,7 +27,7 @@ public class AppModule {
     @Provides
     @Singleton
 
-    LoginApi getLoginInfo() {
+    LoginApi getLoginInfo()  {
         return new LoginApiImp();
     }
 

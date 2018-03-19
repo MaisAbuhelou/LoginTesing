@@ -63,7 +63,6 @@ public class TestResponse {
         context = getInstrumentation().getTargetContext();
         loginApiImp = (LoginApiImp) mActivityRule.getActivity().loginApiImp;
         mIdlingResource = mActivityRule.getActivity().getIdlingResource();
-        // To prove that the test fails, omit this call:
         Espresso.registerIdlingResources(mIdlingResource);
         validLogin = readRawValues(R.raw.valid_login);
         invalidUsername=readRawValues(R.raw.invalid_user_name);
@@ -83,8 +82,9 @@ public class TestResponse {
 
         if (isConnected) {
             try {
-                Response<ResponseData<UserInformation>> response = call.execute();
-               ResponseData<UserInformation> responseData = new Gson().fromJson(validLogin,ResponseData.class);
+                call.execute();
+                call.cancel();
+                ResponseData responseData = new Gson().fromJson(validLogin,ResponseData.class);
 
                 if (responseData != null) {
                     assertTrue(responseData.getStatusCode()==200);
